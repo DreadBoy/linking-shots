@@ -1085,6 +1085,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   texture: {fileID: 2800000, guid: 1aca9becc024a234485eec393f453a07, type: 3}
   cursorMode: 0
+  drawRay: 0
 --- !u!20 &282840813
 Camera:
   m_ObjectHideFlags: 0
@@ -1708,7 +1709,9 @@ MonoBehaviour:
   - {fileID: 21300002, guid: dc234a1837c54974591849877e7dbb9d, type: 3}
   - {fileID: 21300004, guid: dc234a1837c54974591849877e7dbb9d, type: 3}
   - {fileID: 21300010, guid: dc234a1837c54974591849877e7dbb9d, type: 3}
-  weapon: 0
+  pelletPrefab: {fileID: 114959879543176336, guid: a20b2286a1ae4f24397cc6196f1547b7,
+    type: 2}
+  weapon: 2
 --- !u!4 &1383980810
 Transform:
   m_ObjectHideFlags: 0
@@ -1716,7 +1719,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1383980808}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.46, y: 0.53, z: -1}
+  m_LocalPosition: {x: -1.394, y: -0.545, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1803113233}
@@ -1870,10 +1873,10 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 671311803
-  m_SortingLayer: 2
+  m_SortingLayerID: 1030582135
+  m_SortingLayer: 3
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300008, guid: dc234a1837c54974591849877e7dbb9d, type: 3}
+  m_Sprite: {fileID: 21300002, guid: dc234a1837c54974591849877e7dbb9d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -1899,7 +1902,7 @@ PolygonCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0.5}
-    oldSize: {x: 0.421875, y: 0.671875}
+    oldSize: {x: 0.796875, y: 0.671875}
     newSize: {x: 0.421875, y: 0.671875}
     adaptiveTilingThreshold: 0.5
     drawMode: 0

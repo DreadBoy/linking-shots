@@ -9,11 +9,6 @@ public class Player : Character
 {
     new Camera camera;
 
-    Vector2 mousePosition;
-    Vector2 facing;
-
-    float lastShot = 0;
-
     protected override void Start()
     {
         base.Start();
@@ -35,24 +30,38 @@ public class Player : Character
 
         rigidBody.MovePosition((Vector2)transform.position + direction * Time.deltaTime * moveSpeed);
 
-        mousePosition = camera.ScreenToWorldPoint(Input.mousePosition);
-        facing = mousePosition - (Vector2)transform.position;
-        Quaternion targetRotation = Quaternion.LookRotation(facing, Vector3.back);
-        rigidBody.MoveRotation(Quaternion.RotateTowards(transform.rotation, targetRotation, turnSpeed).eulerAngles.z);
+        mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        facing = mousePosition - transform.position2D();
+        float angle = Vector2.SignedAngle(transform.up, facing);
+
+        rigidBody.MoveRotation(rigidBody.rotation + angle * Time.deltaTime * turnSpeed);
 
         CheckShoot();
     }
 
     void CheckShoot()
     {
-        Debug.DrawRay(transform.position, facing, Color.green);
-        if (Input.GetMouseButton(0))
+        switch (weapon)
         {
-            if (weapon == Weapon.Riffle && Time.time - lastShot < 1)
-                return;
-
-
+            case Weapon.Gun:
+                if (Input.GetMouseButtonDown(0) && shooting == false && Time.time - lastShot >= 0.5)
+                    Shoot();
+                break;
+            case Weapon.Hand:
+            case Weapon.Shotgun:
+                if (Input.GetMouseButtonDown(0) && shooting == false && Time.time - lastShot >= 1)
+                    Shoot();
+                break;
+            case Weapon.Riffle:
+                if (Input.GetMouseButton(0) && Time.time - lastShot >= 0.1f)
+                    Shoot();
+                break;
         }
+        if (Input.GetMouseButtonDown(0))
+            shooting = true;
+        else if(Input.GetMouseButtonUp(0))
+            shooting = false;
+
     }
 }
 

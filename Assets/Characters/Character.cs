@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -14,9 +15,16 @@ public class Character : MonoBehaviour
     protected float moveSpeed = 8, turnSpeed = 60;
     [HideInInspector]
     public Sprite[] sprites = new Sprite[0];
+    [SerializeField]
+    Pellet pelletPrefab;
 
     [SerializeField]
     protected Weapon weapon = Weapon.Hand;
+    protected bool shooting = false;
+    protected float lastShot = 0;
+
+    protected Vector2 mousePosition, facing;
+
 
     protected virtual void Start()
     {
@@ -26,7 +34,7 @@ public class Character : MonoBehaviour
 
     protected virtual void Update()
     {
-        switch(weapon)
+        switch (weapon)
         {
             case Weapon.Hand:
                 spriteRenderer.sprite = sprites[0];
@@ -40,13 +48,34 @@ public class Character : MonoBehaviour
             case Weapon.Shotgun:
                 spriteRenderer.sprite = sprites[4];
                 break;
-
         }
+    }
+
+    void CreateShot(Vector2 origin, Vector2 relativeDirection)
+    {
+        Pellet pellet = Instantiate(pelletPrefab);
+        pellet.name = "Pellet";
+        pellet.transform.position = transform.position + transform.rotation * origin;
+        pellet.direction = mousePosition - pellet.transform.position2D() + relativeDirection;
     }
 
     protected virtual void Shoot()
     {
-
+        lastShot = Time.time;
+        switch (weapon)
+        {
+            case Weapon.Gun:
+                CreateShot(new Vector2(0.15f, 0.46f), Vector2.zero);
+                break;
+            case Weapon.Riffle:
+                CreateShot(new Vector2(0.15f, 0.54f), Vector2.zero);
+                break;
+            case Weapon.Shotgun:
+                CreateShot(new Vector2(0.15f, 0.46f), Vector2.zero);
+                CreateShot(new Vector2(0.15f, 0.46f), transform.up + transform.right * 0.5f);
+                CreateShot(new Vector2(0.15f, 0.46f), transform.up - transform.right * 0.5f);
+                break;
+        }
     }
 }
 
