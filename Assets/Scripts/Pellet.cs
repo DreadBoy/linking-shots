@@ -1,12 +1,14 @@
 ﻿using UnityEngine;
 
 [RequireComponent(typeof(TrailRenderer))]
-public class Pellet : MonoBehaviour {
+public class Pellet : MonoBehaviour
+{
 
     public Vector2 direction = Vector2.zero;
     public float speed = 20;
 
     TrailRenderer trailRenderer;
+
 
     private void Start()
     {
@@ -15,12 +17,15 @@ public class Pellet : MonoBehaviour {
 
         direction.Normalize();
 
-        Collider2D hitColliders = Physics2D.OverlapCircle(transform.position2D(), 0.5f);
-        //if (hitColliders)
-        //    Destroy(gameObject);
+        Collider2D hitColliders = Physics2D.OverlapCircle(transform.position2D(), 0.05f);
+        if (hitColliders)
+        {
+            Destroy(gameObject);
+            return;
+        }
     }
 
-    void FixedUpdate ()
+    void FixedUpdate()
     {
 
         Vector2 nextFrame = transform.position2D() + direction * Time.deltaTime * speed;
