@@ -7,14 +7,6 @@ using UnityEditor;
 [RequireComponent(typeof(Rigidbody2D))]
 public class Player : Character
 {
-    new Camera camera;
-
-    protected override void Start()
-    {
-        base.Start();
-        camera = FindObjectOfType<Camera>();
-    }
-
     protected override void Update()
     {
         base.Update();

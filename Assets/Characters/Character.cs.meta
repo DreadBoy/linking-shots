@@ -3,7 +3,11 @@ guid: 286b1277b8bc1ce4686509ff0ce0ab33
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - pelletPrefab: {fileID: 114959879543176336, guid: a20b2286a1ae4f24397cc6196f1547b7,
+      type: 2}
+  - bloodPrefab: {fileID: 1747153246732568, guid: 4f1a807d927a6704bafb98143193cd07,
+      type: 2}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

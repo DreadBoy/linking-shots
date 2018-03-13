@@ -14,9 +14,11 @@ public class Character : MonoBehaviour
     [SerializeField]
     protected float moveSpeed = 8, turnSpeed = 60;
     [HideInInspector]
-    public Sprite[] sprites = new Sprite[0];
+    public Sprite[] sprites = new Sprite[5];
     [SerializeField]
     Pellet pelletPrefab;
+    [SerializeField]
+    GameObject bloodPrefab;
 
     [SerializeField]
     protected Weapon weapon = Weapon.Hand;
@@ -24,12 +26,17 @@ public class Character : MonoBehaviour
     protected float lastShot = 0;
 
     protected Vector2 mousePosition, facing;
-
+    
 
     protected virtual void Start()
     {
         rigidBody = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+
+        if (!pelletPrefab)
+            Debug.LogError("Assign pellet prefab!");
+        if (!bloodPrefab)
+            Debug.LogError("Assign blood prefab!");
     }
 
     protected virtual void Update()
@@ -77,6 +84,15 @@ public class Character : MonoBehaviour
                 break;
         }
     }
+
+    public virtual void GetKilled(Vector2 shotDirection)
+    {
+        //Destroy(gameObject);
+        GameObject blood = Instantiate(bloodPrefab);
+        blood.transform.position = transform.position;
+        blood.transform.up = shotDirection;
+        spriteRenderer.color = new Color(0.8490566f, 0.3804735f, 0.3804735f);
+    }
 }
 
 #if UNITY_EDITOR
@@ -87,9 +103,9 @@ public class CharacterEditor : Editor
 
     public void OnEnable()
     {
-        if (Character.sprites == null || Character.sprites.Length != 6)
+        if (Character.sprites == null || Character.sprites.Length != 5)
         {
-            Character.sprites = new Sprite[6];
+            Character.sprites = new Sprite[5];
             EditorUtility.SetDirty(Character);
         }
     }
@@ -105,9 +121,8 @@ public class CharacterEditor : Editor
         Character.sprites[2] = (Sprite)EditorGUILayout.ObjectField("Gun", Character.sprites[2], typeof(Sprite), false, null);
         Character.sprites[3] = (Sprite)EditorGUILayout.ObjectField("Riffle", Character.sprites[3], typeof(Sprite), false, null);
         Character.sprites[4] = (Sprite)EditorGUILayout.ObjectField("Shotgun", Character.sprites[4], typeof(Sprite), false, null);
-        Character.sprites[5] = (Sprite)EditorGUILayout.ObjectField("Shotgun shooting", Character.sprites[5], typeof(Sprite), false, null);
         if (EditorGUI.EndChangeCheck())
-            EditorUtility.SetDirty(Character);
+            Undo.RecordObject(target, "Changed sprite");
     }
 }
 #endif

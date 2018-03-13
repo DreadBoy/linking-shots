@@ -9,6 +9,9 @@ public class Pellet : MonoBehaviour
 
     TrailRenderer trailRenderer;
 
+    Vector2 origin;
+    RaycastHit2D hit;
+
 
     private void Start()
     {
@@ -17,9 +20,14 @@ public class Pellet : MonoBehaviour
 
         direction.Normalize();
 
+        origin = transform.position2D();
+
         Collider2D hitColliders = Physics2D.OverlapCircle(transform.position2D(), 0.05f);
         if (hitColliders)
         {
+            Character character = hit.collider.GetComponentInParent<Character>();
+            if (character is Character)
+                character.GetKilled(hit.point - origin);
             Destroy(gameObject);
             return;
         }
@@ -27,12 +35,20 @@ public class Pellet : MonoBehaviour
 
     void FixedUpdate()
     {
+        if(hit)
+        {
+            Character character = hit.collider.GetComponentInParent<Character>();
+            if (character is Character)
+                character.GetKilled(hit.point - origin);
+            Destroy(gameObject);
+            return;
+        }
 
         Vector2 nextFrame = transform.position2D() + direction * Time.deltaTime * speed;
-
-        if (Physics2D.Linecast(transform.position2D(), nextFrame))
+        hit = Physics2D.Linecast(transform.position2D(), nextFrame);
+        if (hit)
         {
-            Destroy(gameObject);
+            transform.position = hit.point;
             return;
         }
 

@@ -2,14 +2,14 @@
 
 class CustomCursor : MonoBehaviour
 {
-    public Texture2D texture;
+    public Texture2D texture = null;
     public CursorMode cursorMode = CursorMode.Auto;
     public bool drawRay = false;
 
     private void Start()
     {
-        float factor = Screen.width / 1920f;
         Texture2D resized = Instantiate(texture);
+        //float factor = Screen.width / 1920f;
         //resized.Resize((int)(texture.width * factor), (int)(texture.height * factor));
         Cursor.SetCursor(resized, new Vector2(resized.width / 2, resized.height / 2), cursorMode);
     }
