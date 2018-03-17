@@ -25,8 +25,10 @@ public class Character : MonoBehaviour
     protected bool shooting = false;
     protected float lastShot = 0;
 
-    protected Vector2 mousePosition, facing;
-    
+    public Vector2 Forward { get { return transform.up; } private set { } }
+    private Vector2 _facing;
+    public Vector2 Facing { get { return _facing; } set { _facing = value; } }
+
 
     protected virtual void Start()
     {
@@ -63,12 +65,27 @@ public class Character : MonoBehaviour
         Pellet pellet = Instantiate(pelletPrefab);
         pellet.name = "Pellet";
         pellet.transform.position = transform.position + transform.rotation * origin;
-        pellet.direction = mousePosition - pellet.transform.position2D() + relativeDirection;
+        pellet.direction = Facing + relativeDirection;
     }
 
     protected virtual void Shoot()
     {
-        lastShot = Time.time;
+        switch (weapon)
+        {
+            case Weapon.Gun:
+                if (Time.time - lastShot < 0.5)
+                    return;
+                break;
+            case Weapon.Hand:
+            case Weapon.Shotgun:
+                if (Time.time - lastShot < 1)
+                    return;
+                break;
+            case Weapon.Riffle:
+                if (Time.time - lastShot < 0.1f)
+                    return;
+                break;
+        }
         switch (weapon)
         {
             case Weapon.Gun:
@@ -83,6 +100,7 @@ public class Character : MonoBehaviour
                 CreateShot(new Vector2(0.15f, 0.46f), transform.up - transform.right * 0.5f);
                 break;
         }
+        lastShot = Time.time;
     }
 
     public virtual void GetKilled(Vector2 shotDirection)

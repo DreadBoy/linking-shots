@@ -4,9 +4,10 @@
 using UnityEditor;
 #endif
 
-[RequireComponent(typeof(Rigidbody2D))]
 public class Player : Character
 {
+    protected Vector2 mousePosition;
+
     protected override void Update()
     {
         base.Update();
@@ -23,37 +24,32 @@ public class Player : Character
         rigidBody.MovePosition((Vector2)transform.position + direction * Time.deltaTime * moveSpeed);
 
         mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        facing = mousePosition - transform.position2D();
-        float angle = Vector2.SignedAngle(transform.up, facing);
+        Facing = mousePosition - transform.position2D();
+        float angle = Vector2.SignedAngle(transform.up, Facing);
 
         rigidBody.MoveRotation(rigidBody.rotation + angle * Time.deltaTime * turnSpeed);
 
+        if (Input.GetMouseButton(0))
+            Shoot();
         CheckShoot();
     }
 
     void CheckShoot()
     {
+
         switch (weapon)
         {
             case Weapon.Gun:
-                if (Input.GetMouseButtonDown(0) && shooting == false && Time.time - lastShot >= 0.5)
-                    Shoot();
-                break;
             case Weapon.Hand:
             case Weapon.Shotgun:
-                if (Input.GetMouseButtonDown(0) && shooting == false && Time.time - lastShot >= 1)
+                if (Input.GetMouseButtonDown(0))
                     Shoot();
                 break;
             case Weapon.Riffle:
-                if (Input.GetMouseButton(0) && Time.time - lastShot >= 0.1f)
+                if (Input.GetMouseButton(0))
                     Shoot();
                 break;
         }
-        if (Input.GetMouseButtonDown(0))
-            shooting = true;
-        else if(Input.GetMouseButtonUp(0))
-            shooting = false;
-
     }
 }
 
