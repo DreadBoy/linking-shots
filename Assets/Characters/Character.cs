@@ -28,6 +28,7 @@ public class Character : MonoBehaviour
     public Vector2 Forward { get { return transform.up; } private set { } }
     private Vector2 _facing;
     public Vector2 Facing { get { return _facing; } set { _facing = value; } }
+    public bool Dead = false;
 
 
     protected virtual void Start()
@@ -105,7 +106,7 @@ public class Character : MonoBehaviour
 
     public virtual void GetKilled(Vector2 shotDirection)
     {
-        //Destroy(gameObject);
+        Dead = true;
         GameObject blood = Instantiate(bloodPrefab);
         blood.transform.position = transform.position;
         blood.transform.up = shotDirection;

@@ -17,6 +17,8 @@ public class Guard : Character
     protected override void Update()
     {
         base.Update();
+        if (Dead)
+            return;
         if (CheckLineOfSight())
         {
             Facing = player.transform.position2D() - transform.position2D();
