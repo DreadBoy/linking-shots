@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System;
+using System.Linq;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -20,8 +21,7 @@ public class Character : MonoBehaviour
     [SerializeField]
     GameObject bloodPrefab;
 
-    [SerializeField]
-    protected Weapon weapon = Weapon.Hand;
+    public Weapon weapon;
     protected bool shooting = false;
     protected float lastShot = 0;
 
@@ -40,25 +40,48 @@ public class Character : MonoBehaviour
             Debug.LogError("Assign pellet prefab!");
         if (!bloodPrefab)
             Debug.LogError("Assign blood prefab!");
+        if(!weapon)
+        {
+            Debug.LogWarning("Weapon isn't assigned, creating empty hand!");
+            weapon = ScriptableObject.CreateInstance<Weapon>();
+            weapon.Type = WeaponType.Hand;
+        }
     }
 
     protected virtual void Update()
     {
-        switch (weapon)
+        switch (weapon.Type)
         {
-            case Weapon.Hand:
+            case WeaponType.Hand:
                 spriteRenderer.sprite = sprites[0];
                 break;
-            case Weapon.Gun:
+            case WeaponType.Gun:
                 spriteRenderer.sprite = sprites[2];
                 break;
-            case Weapon.Riffle:
+            case WeaponType.Riffle:
                 spriteRenderer.sprite = sprites[3];
                 break;
-            case Weapon.Shotgun:
+            case WeaponType.Shotgun:
                 spriteRenderer.sprite = sprites[4];
                 break;
         }
+    }
+
+    protected Pickup[] GetPickups()
+    {
+        return Physics2D.OverlapCircleAll(transform.position2D(), 0.5f)
+            .Select(collider => collider.GetComponent<Pickup>())
+            .Where(pickup => !!pickup)
+            .ToArray();
+    }
+
+    protected void Pickup()
+    {
+        Pickup pickup = GetPickups().FirstOrDefault();
+        if (!pickup)
+            return;
+        if (weapon.Type == WeaponType.Hand)
+            weapon = pickup.Pick(weapon);
     }
 
     void CreateShot(Vector2 origin, Vector2 relativeDirection)
@@ -71,31 +94,31 @@ public class Character : MonoBehaviour
 
     protected virtual void Shoot()
     {
-        switch (weapon)
+        switch (weapon.Type)
         {
-            case Weapon.Gun:
+            case WeaponType.Gun:
                 if (Time.time - lastShot < 0.5)
                     return;
                 break;
-            case Weapon.Hand:
-            case Weapon.Shotgun:
+            case WeaponType.Hand:
+            case WeaponType.Shotgun:
                 if (Time.time - lastShot < 1)
                     return;
                 break;
-            case Weapon.Riffle:
+            case WeaponType.Riffle:
                 if (Time.time - lastShot < 0.1f)
                     return;
                 break;
         }
-        switch (weapon)
+        switch (weapon.Type)
         {
-            case Weapon.Gun:
+            case WeaponType.Gun:
                 CreateShot(new Vector2(0.15f, 0.46f), Vector2.zero);
                 break;
-            case Weapon.Riffle:
+            case WeaponType.Riffle:
                 CreateShot(new Vector2(0.15f, 0.54f), Vector2.zero);
                 break;
-            case Weapon.Shotgun:
+            case WeaponType.Shotgun:
                 CreateShot(new Vector2(0.15f, 0.46f), Vector2.zero);
                 CreateShot(new Vector2(0.15f, 0.46f), transform.up + transform.right * 0.5f);
                 CreateShot(new Vector2(0.15f, 0.46f), transform.up - transform.right * 0.5f);

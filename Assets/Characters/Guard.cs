@@ -32,7 +32,6 @@ public class Guard : Character
     bool CheckLineOfSight()
     {
         float angle = Vector2.Angle(Forward, player.transform.position2D() - transform.position2D());
-        Debug.Log(angle);
         if (angle > 45)
             return false;
         RaycastHit2D hit = Physics2D.Linecast(transform.position2D(), player.transform.position2D(), LayerMask.GetMask(Layers.Walls));

@@ -13,6 +13,10 @@ TextureImporter:
     21300016: hitman_hand
     21300018: hitman_idle
     21300020: hitman_riffle
+    21300022: weapon_gun
+    21300024: weapon_shotgun
+    21300026: riffle
+    21300028: weapon_riffle
   externalObjects: {}
   serializedVersion: 5
   mipmaps:
@@ -287,6 +291,66 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 5b27707c24281d1448e12f9e0ebc9871
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: weapon_gun
+      rect:
+        serializedVersion: 2
+        x: 26
+        y: 7
+        width: 19
+        height: 10
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f24fbd10fd6db774cb7c90eee6ba0e01
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: weapon_shotgun
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 18
+        width: 33
+        height: 10
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c5ecd4b50f16f6c4ea8aefadd7ade9a6
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: weapon_riffle
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 7
+        width: 25
+        height: 10
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5f948857b773ef340a4ee3dc01391273
       vertices: []
       indices: 
       edges: []

@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System.Linq;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -28,24 +29,22 @@ public class Player : Character
         float angle = Vector2.SignedAngle(transform.up, Facing);
 
         rigidBody.MoveRotation(rigidBody.rotation + angle * Time.deltaTime * turnSpeed);
-
-        if (Input.GetMouseButton(0))
-            Shoot();
-        CheckShoot();
+        
+        TryShoot();
+        Pickup();
     }
 
-    void CheckShoot()
+    void TryShoot()
     {
-
-        switch (weapon)
+        switch (weapon.Type)
         {
-            case Weapon.Gun:
-            case Weapon.Hand:
-            case Weapon.Shotgun:
+            case WeaponType.Gun:
+            case WeaponType.Hand:
+            case WeaponType.Shotgun:
                 if (Input.GetMouseButtonDown(0))
                     Shoot();
                 break;
-            case Weapon.Riffle:
+            case WeaponType.Riffle:
                 if (Input.GetMouseButton(0))
                     Shoot();
                 break;

@@ -45,7 +45,7 @@ public class Pellet : MonoBehaviour
         }
 
         Vector2 nextFrame = transform.position2D() + direction * Time.deltaTime * speed;
-        hit = Physics2D.Linecast(transform.position2D(), nextFrame);
+        hit = Physics2D.Linecast(transform.position2D(), nextFrame, LayerMask.GetMask(Layers.Walls, Layers.Characters));
         if (hit)
         {
             transform.position = hit.point;
