@@ -46,7 +46,8 @@ public class TimeMaster : MonoBehaviour
             return;
         Instant instant = new Instant(
             trackedObjects
-                .Select(obj => new ObjectInstant(obj.GetInstanceID(), obj.gameObject.activeSelf, obj.transform.position, obj.transform.rotation))
+                .Select(obj => new ObjectInstant(obj.GetInstanceID(), obj.gameObject.activeSelf,
+                    obj.transform.position, obj.transform.rotation, obj.GetData()))
                 .ToArray()
         );
         timeline.Add(instant);
@@ -57,8 +58,8 @@ public class TimeMaster : MonoBehaviour
         rewinding = true;
         foreach (var obj in trackedObjects)
         {
-            foreach (var script in obj.GetComponents<MonoBehaviour>().Where(component => !(component is TimeDependant)))
-                script.enabled = false;
+            foreach (var script in obj.GetComponents<IAffectedByTime>())
+                script.Enabled = false;
         }
         StartCoroutine(Rewinding());
     }
@@ -68,8 +69,8 @@ public class TimeMaster : MonoBehaviour
         StopAllCoroutines();
         foreach (var obj in trackedObjects)
         {
-            foreach (var script in obj.GetComponents<MonoBehaviour>().Where(component => !(component is TimeDependant)))
-                script.enabled = true;
+            foreach (var script in obj.GetComponents<IAffectedByTime>())
+                script.Enabled = true;
         }
         rewinding = false;
     }
@@ -108,6 +109,7 @@ public class TimeMaster : MonoBehaviour
             {
                 item.transform.position = info.position;
                 item.transform.rotation = info.rotation;
+                item.SetData(info.data);
             }
         }
 
@@ -130,13 +132,15 @@ public class TimeMaster : MonoBehaviour
         public bool enabled;
         public Vector3 position;
         public Quaternion rotation;
+        public object data;
 
-        public ObjectInstant(int id, bool enabled, Vector3 position, Quaternion rotation)
+        public ObjectInstant(int id, bool enabled, Vector3 position, Quaternion rotation, object data)
         {
             this.id = id;
             this.enabled = enabled;
             this.position = position;
             this.rotation = rotation;
+            this.data = data;
         }
     }
 }

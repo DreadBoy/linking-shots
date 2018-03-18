@@ -1,20 +1,14 @@
 ﻿using UnityEngine;
 using System.Linq;
 
-#if UNITY_EDITOR
-using UnityEditor;
-#endif
-
 [RequireComponent(typeof(Rigidbody2D))]
-public class Character : MonoBehaviour
+public class Character : MonoBehaviour, IAffectedByTime
 {
     protected Rigidbody2D rigidBody;
     protected SpriteRenderer spriteRenderer;
 
     [SerializeField]
     protected float moveSpeed = 8, turnSpeed = 60;
-    [HideInInspector]
-    public Sprite[] sprites = new Sprite[5];
     [SerializeField]
     Pellet pelletPrefab;
     [SerializeField]
@@ -48,21 +42,7 @@ public class Character : MonoBehaviour
 
     protected virtual void Update()
     {
-        switch (weapon.Type)
-        {
-            case WeaponType.Hand:
-                spriteRenderer.sprite = sprites[0];
-                break;
-            case WeaponType.Gun:
-                spriteRenderer.sprite = sprites[2];
-                break;
-            case WeaponType.Riffle:
-                spriteRenderer.sprite = sprites[3];
-                break;
-            case WeaponType.Shotgun:
-                spriteRenderer.sprite = sprites[4];
-                break;
-        }
+
     }
 
     protected Pickup[] GetPickups()
@@ -131,38 +111,30 @@ public class Character : MonoBehaviour
         GameObject blood = Instantiate(bloodPrefab);
         blood.transform.position = transform.position;
         blood.transform.up = shotDirection;
-        spriteRenderer.color = new Color(0.8490566f, 0.3804735f, 0.3804735f);
     }
-}
 
-#if UNITY_EDITOR
-[CustomEditor(typeof(Character))]
-public class CharacterEditor : Editor
-{
-    private Character Character { get { return (target as Character); } }
-
-    public void OnEnable()
+    public object GetData()
     {
-        if (Character.sprites == null || Character.sprites.Length != 5)
+        return new Data()
         {
-            Character.sprites = new Sprite[5];
-            EditorUtility.SetDirty(Character);
-        }
+            Weapon = weapon,
+            Dead = Dead,
+        };
     }
 
-
-    public override void OnInspectorGUI()
+    public void SetData(object data)
     {
-        base.OnInspectorGUI();
-
-        EditorGUI.BeginChangeCheck();
-        Character.sprites[0] = (Sprite)EditorGUILayout.ObjectField("Idle", Character.sprites[0], typeof(Sprite), false, null);
-        Character.sprites[1] = (Sprite)EditorGUILayout.ObjectField("Hand", Character.sprites[1], typeof(Sprite), false, null);
-        Character.sprites[2] = (Sprite)EditorGUILayout.ObjectField("Gun", Character.sprites[2], typeof(Sprite), false, null);
-        Character.sprites[3] = (Sprite)EditorGUILayout.ObjectField("Riffle", Character.sprites[3], typeof(Sprite), false, null);
-        Character.sprites[4] = (Sprite)EditorGUILayout.ObjectField("Shotgun", Character.sprites[4], typeof(Sprite), false, null);
-        if (EditorGUI.EndChangeCheck())
-            Undo.RecordObject(target, "Changed sprite");
+        if (!(data is Data))
+            return;
+        weapon = ((Data)data).Weapon;
+        Dead = ((Data)data).Dead;
     }
+
+    struct Data
+    {
+        public Weapon Weapon;
+        public bool Dead;
+    }
+
+    public bool Enabled { get { return enabled; } set { enabled = value; } }
 }
-#endif

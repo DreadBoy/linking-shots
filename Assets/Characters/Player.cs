@@ -1,9 +1,4 @@
 ﻿using UnityEngine;
-using System.Linq;
-
-#if UNITY_EDITOR
-using UnityEditor;
-#endif
 
 public class Player : Character
 {
@@ -12,7 +7,7 @@ public class Player : Character
     protected override void Start()
     {
         base.Start();
-        StateLoader stateLoader =  FindObjectOfType<StateLoader>();
+        StateLoader stateLoader = FindObjectOfType<StateLoader>();
         if (stateLoader)
             weapon = stateLoader.gameState.Weapon;
     }
@@ -20,6 +15,8 @@ public class Player : Character
     protected override void Update()
     {
         base.Update();
+        if (Dead)
+            return;
         Vector2 direction = Vector2.zero;
         if (Input.GetKey(KeyCode.W))
             direction += Vector2.up;
@@ -37,7 +34,7 @@ public class Player : Character
         float angle = Vector2.SignedAngle(transform.up, Facing);
 
         rigidBody.MoveRotation(rigidBody.rotation + angle * Time.deltaTime * turnSpeed);
-        
+
         TryShoot();
         Pickup();
     }
@@ -59,10 +56,3 @@ public class Player : Character
         }
     }
 }
-
-#if UNITY_EDITOR
-[CustomEditor(typeof(Player))]
-public class PlayerEditor : CharacterEditor
-{
-}
-#endif

@@ -1,9 +1,5 @@
 ﻿using UnityEngine;
 
-#if UNITY_EDITOR
-using UnityEditor;
-#endif
-
 public class Guard : Character
 {
     Player player;
@@ -42,10 +38,3 @@ public class Guard : Character
         return !hit;
     }
 }
-
-#if UNITY_EDITOR
-[CustomEditor(typeof(Guard))]
-public class GuardEditor : CharacterEditor
-{
-}
-#endif
