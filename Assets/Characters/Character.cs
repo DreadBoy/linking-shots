@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System;
 using System.Linq;
 
 #if UNITY_EDITOR
@@ -30,7 +29,6 @@ public class Character : MonoBehaviour
     public Vector2 Facing { get { return _facing; } set { _facing = value; } }
     public bool Dead = false;
 
-
     protected virtual void Start()
     {
         rigidBody = GetComponent<Rigidbody2D>();
@@ -40,7 +38,7 @@ public class Character : MonoBehaviour
             Debug.LogError("Assign pellet prefab!");
         if (!bloodPrefab)
             Debug.LogError("Assign blood prefab!");
-        if(!weapon)
+        if (!weapon)
         {
             Debug.LogWarning("Weapon isn't assigned, creating empty hand!");
             weapon = ScriptableObject.CreateInstance<Weapon>();

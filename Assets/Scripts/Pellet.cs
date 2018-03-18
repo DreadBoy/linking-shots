@@ -28,7 +28,7 @@ public class Pellet : MonoBehaviour
             Character character = hit.collider.GetComponentInParent<Character>();
             if (character is Character)
                 character.GetKilled(hit.point - origin);
-            Destroy(gameObject);
+            gameObject.SetActive(false);
             return;
         }
     }
@@ -40,7 +40,7 @@ public class Pellet : MonoBehaviour
             Character character = hit.collider.GetComponentInParent<Character>();
             if (character is Character)
                 character.GetKilled(hit.point - origin);
-            Destroy(gameObject);
+            gameObject.SetActive(false);
             return;
         }
 

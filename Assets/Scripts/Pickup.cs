@@ -22,7 +22,7 @@ public class Pickup : MonoBehaviour
     {
         if (weapon.Type == WeaponType.Hand)
         {
-            Destroy(gameObject);
+            gameObject.SetActive(false);
             return Instantiate(this.weapon);
         }
         return weapon;
