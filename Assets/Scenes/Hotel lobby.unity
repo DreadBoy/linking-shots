@@ -2768,6 +2768,47 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 0
+--- !u!1 &1457943795
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1457943797}
+  - component: {fileID: 1457943796}
+  m_Layer: 0
+  m_Name: StateLoader
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1457943796
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1457943795}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3263c27356a398646a45ce23250b4734, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameState: {fileID: 11400000, guid: 882bbfa2871572544a9036c339552af2, type: 2}
+--- !u!4 &1457943797
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1457943795}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1.4678677, y: -4.4769626, z: -0.03515625}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1510169532
 GameObject:
   m_ObjectHideFlags: 0
@@ -2955,7 +2996,7 @@ PolygonCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0.5}
-    oldSize: {x: 0.796875, y: 0.671875}
+    oldSize: {x: 0.71875, y: 0.671875}
     newSize: {x: 0.421875, y: 0.671875}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -3006,7 +3047,7 @@ SpriteRenderer:
   m_SortingLayerID: 1030582135
   m_SortingLayer: 3
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300020, guid: dc234a1837c54974591849877e7dbb9d, type: 3}
+  m_Sprite: {fileID: 21300012, guid: dc234a1837c54974591849877e7dbb9d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -3081,7 +3122,7 @@ SpriteRenderer:
   m_SortingLayerID: 1030582135
   m_SortingLayer: 3
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300002, guid: dc234a1837c54974591849877e7dbb9d, type: 3}
+  m_Sprite: {fileID: 21300008, guid: dc234a1837c54974591849877e7dbb9d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -3107,7 +3148,7 @@ PolygonCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0.5}
-    oldSize: {x: 0.796875, y: 0.671875}
+    oldSize: {x: 0.421875, y: 0.671875}
     newSize: {x: 0.421875, y: 0.671875}
     adaptiveTilingThreshold: 0.5
     drawMode: 0

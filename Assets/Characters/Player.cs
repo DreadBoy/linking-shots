@@ -9,6 +9,14 @@ public class Player : Character
 {
     protected Vector2 mousePosition;
 
+    protected override void Start()
+    {
+        base.Start();
+        StateLoader stateLoader =  FindObjectOfType<StateLoader>();
+        if (stateLoader)
+            weapon = stateLoader.gameState.Weapon;
+    }
+
     protected override void Update()
     {
         base.Update();
