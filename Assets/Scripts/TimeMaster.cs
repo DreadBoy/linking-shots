@@ -2,11 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class TimeMaster : MonoBehaviour
 {
     List<Instant> timeline = new List<Instant>();
     List<TimeDependant> trackedObjects = new List<TimeDependant>();
+
+    [HideInInspector]
+    public UnityEvent TimeshiftStart, TimeshiftStop;
 
     bool rewinding = false;
 
@@ -20,14 +24,6 @@ public class TimeMaster : MonoBehaviour
     public void TrackObject(TimeDependant trackedObject)
     {
         trackedObjects.Add(trackedObject);
-    }
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Space))
-            StartRewind();
-        if (Input.GetKeyUp(KeyCode.Space))
-            StopRewind();
     }
 
     private void FixedUpdate()
@@ -61,8 +57,7 @@ public class TimeMaster : MonoBehaviour
             foreach (var script in obj.GetComponents<IAffectedByTime>())
                 script.Enabled = false;
         }
-        foreach (var timeshift in FindObjectsOfType<TimeshiftColour>())
-            timeshift.ShiftTimeStart();
+        TimeshiftStart.Invoke();
         StartCoroutine(Rewinding());
     }
 
@@ -74,8 +69,7 @@ public class TimeMaster : MonoBehaviour
             foreach (var script in obj.GetComponents<IAffectedByTime>())
                 script.Enabled = true;
         }
-        foreach (var timeshift in FindObjectsOfType<TimeshiftColour>())
-            timeshift.ShiftTimeStop();
+        TimeshiftStop.Invoke();
         rewinding = false;
     }
 

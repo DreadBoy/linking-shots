@@ -127,8 +127,8 @@ GameObject:
   - component: {fileID: 56238676}
   - component: {fileID: 56238677}
   - component: {fileID: 56238675}
-  - component: {fileID: 56238678}
   - component: {fileID: 56238679}
+  - component: {fileID: 56238678}
   m_Layer: 9
   m_Name: Walls
   m_TagString: Untagged
@@ -1271,9 +1271,41 @@ MonoBehaviour:
   m_GameObject: {fileID: 56238671}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6eb30c779b6b0594584ec953a1995390, type: 3}
+  m_Script: {fileID: 11500000, guid: 7fe4fd9d0ef7d174d8e3334bef863dc1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  TimeshiftStart:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 56238679}
+        m_MethodName: TimeshiftStart
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  TimeshiftStop:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 56238679}
+        m_MethodName: TimeshiftStop
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
 --- !u!114 &56238679
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1572,8 +1604,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2d3c849c1e0cb84a9f6486105fde9c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  TimeshiftStart:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  TimeshiftStop:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
   ShowTrace: 0
-  grayscale: {fileID: 0}
 --- !u!4 &580662894
 Transform:
   m_ObjectHideFlags: 0
@@ -1598,8 +1639,8 @@ GameObject:
   - component: {fileID: 601903198}
   - component: {fileID: 601903200}
   - component: {fileID: 601903199}
-  - component: {fileID: 601903201}
   - component: {fileID: 601903202}
+  - component: {fileID: 601903201}
   m_Layer: 31
   m_Name: Floor
   m_TagString: Untagged
@@ -2782,9 +2823,41 @@ MonoBehaviour:
   m_GameObject: {fileID: 601903197}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6eb30c779b6b0594584ec953a1995390, type: 3}
+  m_Script: {fileID: 11500000, guid: 7fe4fd9d0ef7d174d8e3334bef863dc1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  TimeshiftStart:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 601903202}
+        m_MethodName: TimeshiftStart
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  TimeshiftStop:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 601903202}
+        m_MethodName: TimeshiftStop
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
 --- !u!114 &601903202
 MonoBehaviour:
   m_ObjectHideFlags: 0

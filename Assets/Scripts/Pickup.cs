@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 [RequireComponent(typeof(SpriteRenderer))]
 public class Pickup : MonoBehaviour
@@ -26,8 +25,5 @@ public class Pickup : MonoBehaviour
             return Instantiate(this.weapon);
         }
         return weapon;
-        //Weapon ret = Instantiate(this.weapon);
-        //this.weapon = weapon;
-        //return ret;
     }
 }
