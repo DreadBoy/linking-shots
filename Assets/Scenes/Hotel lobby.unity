@@ -127,6 +127,8 @@ GameObject:
   - component: {fileID: 56238676}
   - component: {fileID: 56238677}
   - component: {fileID: 56238675}
+  - component: {fileID: 56238678}
+  - component: {fileID: 56238679}
   m_Layer: 9
   m_Name: Walls
   m_TagString: Untagged
@@ -164,7 +166,7 @@ TilemapRenderer:
   m_ReflectionProbeUsage: 0
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 2100000, guid: 675f39076a3c51a45b814934dc1b553a, type: 2}
+  - {fileID: 2100000, guid: 105a9cc257695f9468025c153c9d5c89, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1261,6 +1263,30 @@ TilemapCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 1
   m_Offset: {x: 0, y: 0}
+--- !u!114 &56238678
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 56238671}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6eb30c779b6b0594584ec953a1995390, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &56238679
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 56238671}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9541a2c7604e63649be406d62a61783c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  normalMaterial: {fileID: 0}
+  reverseMaterial: {fileID: 2100000, guid: 675f39076a3c51a45b814934dc1b553a, type: 2}
 --- !u!1 &110534837
 GameObject:
   m_ObjectHideFlags: 0
@@ -1547,6 +1573,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTrace: 0
+  grayscale: {fileID: 0}
 --- !u!4 &580662894
 Transform:
   m_ObjectHideFlags: 0
@@ -1571,6 +1598,8 @@ GameObject:
   - component: {fileID: 601903198}
   - component: {fileID: 601903200}
   - component: {fileID: 601903199}
+  - component: {fileID: 601903201}
+  - component: {fileID: 601903202}
   m_Layer: 31
   m_Name: Floor
   m_TagString: Untagged
@@ -2745,6 +2774,30 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!114 &601903201
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 601903197}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6eb30c779b6b0594584ec953a1995390, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &601903202
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 601903197}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9541a2c7604e63649be406d62a61783c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  normalMaterial: {fileID: 0}
+  reverseMaterial: {fileID: 2100000, guid: 675f39076a3c51a45b814934dc1b553a, type: 2}
 --- !u!1 &1383980808
 GameObject:
   m_ObjectHideFlags: 0
