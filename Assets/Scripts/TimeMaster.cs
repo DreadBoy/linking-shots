@@ -61,6 +61,8 @@ public class TimeMaster : MonoBehaviour
             foreach (var script in obj.GetComponents<IAffectedByTime>())
                 script.Enabled = false;
         }
+        foreach (var timeshift in FindObjectsOfType<TimeshiftColour>())
+            timeshift.ShiftTimeStart();
         StartCoroutine(Rewinding());
     }
 
@@ -72,6 +74,8 @@ public class TimeMaster : MonoBehaviour
             foreach (var script in obj.GetComponents<IAffectedByTime>())
                 script.Enabled = true;
         }
+        foreach (var timeshift in FindObjectsOfType<TimeshiftColour>())
+            timeshift.ShiftTimeStop();
         rewinding = false;
     }
 

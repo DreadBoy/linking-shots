@@ -6,7 +6,7 @@ Material:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: TestMaterial
+  m_Name: Grayscale
   m_Shader: {fileID: 4800000, guid: 7e3fe3888f5cc1a40a7c553cb1c472b0, type: 3}
   m_ShaderKeywords: PIXELSNAP_ON
   m_LightmapFlags: 4

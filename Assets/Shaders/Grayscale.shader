@@ -1,4 +1,4 @@
-﻿Shader "Sprites/Diffuse2"
+﻿Shader "Sprites/Grayscale"
 {
 	Properties
 	{
@@ -29,6 +29,7 @@
 		#pragma surface surf Lambert vertex:vert nofog nolightmap nodynlightmap keepalpha noinstancing
 		#pragma multi_compile _ PIXELSNAP_ON
         #pragma multi_compile _ ETC1_EXTERNAL_ALPHA
+        #pragma enable_d3d11_debug_symbols
 		#include "UnitySprites.cginc"
 
 		struct Input
@@ -46,13 +47,15 @@
             #endif
             
             UNITY_INITIALIZE_OUTPUT(Input, o);
+
             o.color = v.color * _Color * _RendererColor;
         }
 
         void surf(Input IN, inout SurfaceOutput o)
         {
             fixed4 c = SampleSpriteTexture(IN.uv_MainTex) * IN.color;
-            o.Albedo = c.rgb * c.a;
+
+            o.Albedo = dot(c.rgb, float3(0.3, 0.59, 0.11)) * c.a;
             o.Alpha = c.a;
         }
 		ENDCG
