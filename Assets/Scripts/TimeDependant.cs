@@ -1,6 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 public class TimeDependant : MonoBehaviour
 {
@@ -28,3 +31,27 @@ public class TimeDependant : MonoBehaviour
         }
     }
 }
+
+
+
+#if UNITY_EDITOR
+[CustomEditor(typeof(TimeDependant))]
+public class TimeDependantEditor : Editor
+{
+    private TimeDependant TimeDependant { get { return (target as TimeDependant); } }
+    
+    public override void OnInspectorGUI()
+    {
+        EditorGUILayout.LabelField("This component will track position, rotation, isActive and any custom data of this GameObject.", EditorStyles.wordWrappedLabel);
+        Component[] comps = TimeDependant.GetComponents<IAffectedByTime>().Cast<Component>().ToArray();
+        if(comps.Length == 0)
+            return;
+        EditorGUILayout.BeginVertical();
+        EditorGUILayout.LabelField("Recognised components with custom data:", EditorStyles.boldLabel);
+        foreach (Component comp in comps)
+            EditorGUILayout.LabelField(comp.GetType().ToString());
+        EditorGUILayout.EndVertical();
+    }
+}
+#endif
+
