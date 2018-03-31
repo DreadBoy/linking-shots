@@ -13,6 +13,7 @@ public class TimeMaster : MonoBehaviour
     public UnityEvent TimeshiftStart, TimeshiftStop;
 
     bool rewinding = false;
+    public bool Rewinding { get { return rewinding; } private set { } }
 
     public bool ShowTrace = false;
 
@@ -58,7 +59,7 @@ public class TimeMaster : MonoBehaviour
                 script.Enabled = false;
         }
         TimeshiftStart.Invoke();
-        StartCoroutine(Rewinding());
+        StartCoroutine(RewindingCoroutine());
     }
 
     public void StopRewind()
@@ -73,12 +74,13 @@ public class TimeMaster : MonoBehaviour
         rewinding = false;
     }
 
-    public IEnumerator Rewinding()
+    public IEnumerator RewindingCoroutine()
     {
         while (timeline.Count > 0)
         {
             yield return new WaitForFixedUpdate();
-            RewindFrame();
+            for (int i = 0; i < 3 && timeline.Count > 0; i++)
+                RewindFrame();
         }
         StopRewind();
         yield return null;

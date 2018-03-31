@@ -55,4 +55,12 @@ public class Player : Character
                 break;
         }
     }
+
+    public override void GetKilled(Vector2 shotDirection)
+    {
+        TimeMaster timeMaster = FindObjectOfType<TimeMaster>();
+        if (timeMaster.Rewinding)
+            return;
+        timeMaster.StartRewind();
+    }
 }

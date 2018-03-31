@@ -21,7 +21,8 @@ public class Character : MonoBehaviour, IAffectedByTime
     public Vector2 Forward { get { return transform.up; } private set { } }
     private Vector2 _facing;
     public Vector2 Facing { get { return _facing; } set { _facing = value; } }
-    public bool Dead = false;
+    private bool _dead;
+    public bool Dead { get { return _dead; } set { _dead = value; } }
 
     protected virtual void Start()
     {
