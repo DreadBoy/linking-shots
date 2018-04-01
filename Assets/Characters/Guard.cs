@@ -1,13 +1,26 @@
 ﻿using UnityEngine;
+using System.Linq;
+using System;
+using UnityEditorInternal;
+using System.Collections.Generic;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 public class Guard : Character
 {
-    Player player;
+    public Player player;
+    public ICharacterComponent[] components;
+
+    void Reset()
+    {
+        player = FindObjectOfType<Player>();
+    }
 
     protected override void Start()
     {
         base.Start();
-        player = FindObjectOfType<Player>();
+        components = GetComponents<ICharacterComponent>().OrderByDescending(i => i.Priority).ToArray();
     }
 
     protected override void Update()
@@ -15,26 +28,43 @@ public class Guard : Character
         base.Update();
         if (Dead)
             return;
-        if (CheckLineOfSight())
-        {
-            Facing = player.transform.position2D() - transform.position2D();
-            float angle = Vector2.SignedAngle(transform.up, Facing);
-            rigidBody.MoveRotation(rigidBody.rotation + angle * Time.deltaTime * turnSpeed);
-            Shoot();
-        }
-
-    }
-
-    bool CheckLineOfSight()
-    {
-        float angle = Vector2.Angle(Forward, player.transform.position2D() - transform.position2D());
-        if (angle > 45)
-            return false;
-        RaycastHit2D hit = Physics2D.Linecast(transform.position2D(), player.transform.position2D(), LayerMask.GetMask(Layers.Walls));
-        if (hit)
-            Debug.DrawLine(transform.position, hit.point, Color.green);
-        else
-            Debug.DrawLine(transform.position, player.transform.position2D(), Color.red);
-        return !hit;
+        foreach (var comp in components)
+            if (comp.Run())
+                break;
     }
 }
+
+#if UNITY_EDITOR
+[CustomEditor(typeof(Guard))]
+public class GuardEditor : Editor
+{
+    private Guard Guard { get { return (target as Guard); } }
+    int selectedIndex = 0;
+    Type[] components = InterfaceSearch.GetTypesWithThisInterface<ICharacterComponent>().ToArray();
+    string[] componentsString = new string[] { "Select component" }.Concat(InterfaceSearch.GetTypesWithThisInterface<ICharacterComponent>().Select(t => t.ToString())).ToArray();
+
+    public override void OnInspectorGUI()
+    {
+        base.OnInspectorGUI();
+        GUILayout.BeginVertical();
+        GUILayout.Label("Add component", new GUIStyle() { fontStyle = FontStyle.Bold });
+        int selected = EditorGUILayout.Popup(selectedIndex, componentsString);
+        if (selectedIndex != selected)
+            Undo.AddComponent(Guard.gameObject, components.ElementAt(selected - 1));
+        GUILayout.Label("Actions", new GUIStyle() { fontStyle = FontStyle.Bold });
+        GUILayout.BeginHorizontal();
+        GUILayout.Label("Priority");
+        GUILayout.Label("Action");
+        GUILayout.EndHorizontal();
+        foreach (ICharacterComponent action in Guard.GetComponents<ICharacterComponent>().OrderByDescending(i => i.Priority))
+        {
+            GUILayout.BeginHorizontal();
+            GUILayout.Label(action.Priority.ToString(), new GUIStyle() { fontStyle = FontStyle.Bold });
+            GUILayout.Label((action as Component).GetType().ToString());
+            GUILayout.EndHorizontal();
+        }
+
+        GUILayout.EndVertical();
+    }
+}
+#endif

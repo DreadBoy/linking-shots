@@ -3038,6 +3038,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 400a594fd9acad44ebd47a7be9e6b15f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rigidBody: {fileID: 0}
+  spriteRenderer: {fileID: 0}
   moveSpeed: 8
   turnSpeed: 60
   pelletPrefab: {fileID: 114959879543176336, guid: a20b2286a1ae4f24397cc6196f1547b7,
@@ -3160,6 +3162,8 @@ GameObject:
   - component: {fileID: 1510169533}
   - component: {fileID: 1510169536}
   - component: {fileID: 1510169537}
+  - component: {fileID: 1510169538}
+  - component: {fileID: 1510169539}
   m_Layer: 11
   m_Name: hitman
   m_TagString: Untagged
@@ -3178,6 +3182,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: faf8d8c252edf7940b6d0a5c5cfb719d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rigidBody: {fileID: 0}
+  spriteRenderer: {fileID: 0}
   moveSpeed: 8
   turnSpeed: 60
   pelletPrefab: {fileID: 114959879543176336, guid: a20b2286a1ae4f24397cc6196f1547b7,
@@ -3185,6 +3191,7 @@ MonoBehaviour:
   bloodPrefab: {fileID: 1747153246732568, guid: 4f1a807d927a6704bafb98143193cd07,
     type: 2}
   weapon: {fileID: 11400000, guid: ccc8e6e04dd6018439c573bf3e37fa3c, type: 2}
+  player: {fileID: 1383980809}
 --- !u!50 &1510169534
 Rigidbody2D:
   serializedVersion: 4
@@ -3247,6 +3254,32 @@ MonoBehaviour:
   - {fileID: 21300012, guid: dc234a1837c54974591849877e7dbb9d, type: 3}
   - {fileID: 21300020, guid: dc234a1837c54974591849877e7dbb9d, type: 3}
   - {fileID: 21300014, guid: dc234a1837c54974591849877e7dbb9d, type: 3}
+--- !u!114 &1510169538
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1510169532}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 95b513ba4007a7c4289e3ce2c17bb193, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  guard: {fileID: 1510169533}
+  priority: 2
+--- !u!114 &1510169539
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1510169532}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83841db986a996244a4bbc3c437fa5f5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  guard: {fileID: 1510169533}
+  priority: 3
 --- !u!1 &1526980365
 GameObject:
   m_ObjectHideFlags: 0

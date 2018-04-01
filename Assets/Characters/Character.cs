@@ -4,11 +4,12 @@ using System.Linq;
 [RequireComponent(typeof(Rigidbody2D))]
 public class Character : MonoBehaviour, IAffectedByTime
 {
-    protected Rigidbody2D rigidBody;
-    protected SpriteRenderer spriteRenderer;
-
-    [SerializeField]
-    protected float moveSpeed = 8, turnSpeed = 60;
+    [HideInInspector]
+    public Rigidbody2D rigidBody;
+    [HideInInspector]
+    public SpriteRenderer spriteRenderer;
+    
+    public float moveSpeed = 8, turnSpeed = 60;
     [SerializeField]
     Pellet pelletPrefab;
     [SerializeField]
@@ -71,7 +72,7 @@ public class Character : MonoBehaviour, IAffectedByTime
         pellet.direction = Facing + relativeDirection;
     }
 
-    protected virtual void Shoot()
+    public virtual void Shoot()
     {
         switch (weapon.Type)
         {

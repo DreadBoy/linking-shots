@@ -46,16 +46,16 @@ public class CharacterRenderer : MonoBehaviour
 
 #if UNITY_EDITOR
 [CustomEditor(typeof(CharacterRenderer))]
-public class WeaponRendererEditor : Editor
+public class CharacterRendererEditor : Editor
 {
-    private CharacterRenderer WeaponRenderer { get { return (target as CharacterRenderer); } }
+    private CharacterRenderer CharacterRenderer { get { return (target as CharacterRenderer); } }
 
     public void OnEnable()
     {
-        if (WeaponRenderer.sprites == null || WeaponRenderer.sprites.Length != 5)
+        if (CharacterRenderer.sprites == null || CharacterRenderer.sprites.Length != 5)
         {
-            WeaponRenderer.sprites = new Sprite[5];
-            EditorUtility.SetDirty(WeaponRenderer);
+            CharacterRenderer.sprites = new Sprite[5];
+            EditorUtility.SetDirty(CharacterRenderer);
         }
     }
 
@@ -65,11 +65,11 @@ public class WeaponRendererEditor : Editor
         base.OnInspectorGUI();
 
         EditorGUI.BeginChangeCheck();
-        WeaponRenderer.sprites[0] = (Sprite)EditorGUILayout.ObjectField("Idle", WeaponRenderer.sprites[0], typeof(Sprite), false, null);
-        WeaponRenderer.sprites[1] = (Sprite)EditorGUILayout.ObjectField("Hand", WeaponRenderer.sprites[1], typeof(Sprite), false, null);
-        WeaponRenderer.sprites[2] = (Sprite)EditorGUILayout.ObjectField("Gun", WeaponRenderer.sprites[2], typeof(Sprite), false, null);
-        WeaponRenderer.sprites[3] = (Sprite)EditorGUILayout.ObjectField("Riffle", WeaponRenderer.sprites[3], typeof(Sprite), false, null);
-        WeaponRenderer.sprites[4] = (Sprite)EditorGUILayout.ObjectField("Shotgun", WeaponRenderer.sprites[4], typeof(Sprite), false, null);
+        CharacterRenderer.sprites[0] = (Sprite)EditorGUILayout.ObjectField("Idle", CharacterRenderer.sprites[0], typeof(Sprite), false, null);
+        CharacterRenderer.sprites[1] = (Sprite)EditorGUILayout.ObjectField("Hand", CharacterRenderer.sprites[1], typeof(Sprite), false, null);
+        CharacterRenderer.sprites[2] = (Sprite)EditorGUILayout.ObjectField("Gun", CharacterRenderer.sprites[2], typeof(Sprite), false, null);
+        CharacterRenderer.sprites[3] = (Sprite)EditorGUILayout.ObjectField("Riffle", CharacterRenderer.sprites[3], typeof(Sprite), false, null);
+        CharacterRenderer.sprites[4] = (Sprite)EditorGUILayout.ObjectField("Shotgun", CharacterRenderer.sprites[4], typeof(Sprite), false, null);
         if (EditorGUI.EndChangeCheck())
             Undo.RecordObject(target, "Changed sprite");
     }
