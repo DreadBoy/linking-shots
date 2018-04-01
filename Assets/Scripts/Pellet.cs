@@ -25,9 +25,9 @@ public class Pellet : MonoBehaviour
         Collider2D hitColliders = Physics2D.OverlapCircle(transform.position2D(), 0.05f);
         if (hitColliders)
         {
-            Character character = hit.collider.GetComponentInParent<Character>();
+            Character character = hitColliders.GetComponentInParent<Character>();
             if (character is Character)
-                character.GetKilled(hit.point - origin);
+                character.GetKilled(transform.position2D() - origin);
             gameObject.SetActive(false);
             return;
         }
