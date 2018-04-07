@@ -3162,9 +3162,10 @@ GameObject:
   - component: {fileID: 1510169536}
   - component: {fileID: 1510169537}
   - component: {fileID: 1510169533}
+  - component: {fileID: 1510169541}
+  - component: {fileID: 1510169540}
   - component: {fileID: 1510169538}
   - component: {fileID: 1510169539}
-  - component: {fileID: 1510169540}
   m_Layer: 11
   m_Name: hitman
   m_TagString: Untagged
@@ -3194,6 +3195,7 @@ MonoBehaviour:
   weapon: {fileID: 11400000, guid: ccc8e6e04dd6018439c573bf3e37fa3c, type: 2}
   player: {fileID: 1383980809}
   hasLineOfSight: 0
+  inPursueMode: 0
 --- !u!50 &1510169534
 Rigidbody2D:
   serializedVersion: 4
@@ -3294,7 +3296,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   guard: {fileID: 1510169533}
-  priority: 4
+  priority: 6
+--- !u!114 &1510169541
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1510169532}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 771e331969bf47243bd74247f20ad553, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  guard: {fileID: 1510169533}
+  priority: 5
 --- !u!1 &1526980365
 GameObject:
   m_ObjectHideFlags: 0

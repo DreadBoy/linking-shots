@@ -1,8 +1,6 @@
 ﻿using UnityEngine;
 using System.Linq;
 using System;
-using UnityEditorInternal;
-using System.Collections.Generic;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
@@ -14,6 +12,8 @@ public class Guard : Character
 
     public bool hasLineOfSight = false;
     public Vector2? lastPlayerPosition = null;
+    public bool inPursueMode = false;
+    
 
     void Reset()
     {
@@ -75,7 +75,8 @@ public class Guard : Character
             Weapon = weapon,
             Dead = Dead,
             hasLineOfSight = hasLineOfSight,
-            lastPlayerPosition = lastPlayerPosition
+            lastPlayerPosition = lastPlayerPosition,
+            inPursueMode = inPursueMode,
         };
     }
 
@@ -90,6 +91,7 @@ public class Guard : Character
             collider.enabled = !Dead;
         hasLineOfSight = d.hasLineOfSight;
         lastPlayerPosition = d.lastPlayerPosition;
+        inPursueMode = d.inPursueMode;
     }
 
     struct Data
@@ -98,6 +100,7 @@ public class Guard : Character
         public bool Dead;
         public bool hasLineOfSight;
         public Vector2? lastPlayerPosition;
+        public bool inPursueMode;
     }
 }
 

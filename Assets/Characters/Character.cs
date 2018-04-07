@@ -20,6 +20,7 @@ public class Character : MonoBehaviour, IAffectedByTime
     protected float lastShot = 0;
 
     public Vector2 Forward { get { return transform.up; } private set { } }
+    public Vector2 Right { get { return -transform.right; } private set { } }
     private Vector2 _facing;
     public Vector2 Facing { get { return _facing; } set { _facing = value; } }
     private bool _dead;

@@ -1,7 +1,4 @@
 ﻿using UnityEngine;
-#if UNITY_EDITOR
-using UnityEditor;
-#endif
 
 [RequireComponent(typeof(Guard))]
 public class Pursue : MonoBehaviour, ICharacterComponent
@@ -20,6 +17,7 @@ public class Pursue : MonoBehaviour, ICharacterComponent
     {
         if (!guard.hasLineOfSight && guard.lastPlayerPosition.HasValue)
         {
+            guard.inPursueMode = true;
             guard.rigidBody.bodyType = RigidbodyType2D.Dynamic;
             if ((guard.lastPlayerPosition.Value - guard.transform.position2D()).magnitude < 0.1)
             {
@@ -37,12 +35,3 @@ public class Pursue : MonoBehaviour, ICharacterComponent
         return false;
     }
 }
-
-#if UNITY_EDITOR
-[CustomEditor(typeof(Pursue))]
-public class PursueEditor : Editor
-{
-    private Pursue Pursue { get { return (target as Pursue); } }
-
-}
-#endif
