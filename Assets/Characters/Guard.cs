@@ -1,46 +1,45 @@
 ﻿using UnityEngine;
-using System.Linq;
-using System;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
 
+[RequireComponent(typeof(Animator))]
 public class Guard : Character
 {
     public Player player;
-    public ICharacterComponent[] components;
+    public Animator animator;
 
-    public bool hasLineOfSight = false;
     public Vector2? lastPlayerPosition = null;
-    public bool inPursueMode = false;
-    
+    public bool HasLineOfSight { get { return animator.GetBool("hasLineOfSight"); } private set { } }
 
     void Reset()
     {
         player = FindObjectOfType<Player>();
+        animator = GetComponent<Animator>();
     }
 
     protected override void Start()
     {
         base.Start();
-        components = GetComponents<ICharacterComponent>().OrderByDescending(i => i.Priority).ToArray();
     }
 
     protected override void Update()
     {
         base.Update();
-        bool hasLineOfSight = CheckLineOfSight();
-        if (hasLineOfSight && !this.hasLineOfSight)
-            lastPlayerPosition = null;
-        else if (!hasLineOfSight && this.hasLineOfSight)
-            lastPlayerPosition = player.transform.position;
-        this.hasLineOfSight = hasLineOfSight;
-
         if (Dead)
             return;
-        foreach (var comp in components)
-            if (comp.Run())
-                break;
+
+        bool hasLineOfSight = CheckLineOfSight();
+        if (hasLineOfSight && !animator.GetBool("hasLineOfSight"))
+            lastPlayerPosition = null;
+        else if (!hasLineOfSight && animator.GetBool("hasLineOfSight"))
+            lastPlayerPosition = player.transform.position;
+        animator.SetBool("hasLineOfSight", hasLineOfSight);
+
+
+        var behaviour = animator.GetCurrentBehaviour<GuardState>();
+        if (behaviour != null)
+            behaviour.Run(this);
     }
 
     bool CheckLineOfSight()
@@ -68,15 +67,20 @@ public class Guard : Character
         rigidBody.MovePosition(transform.position2D() + (target - transform.position2D()).normalized * Time.deltaTime * moveSpeed);
     }
 
+    public void EndOfPursue()
+    {
+        animator.SetTrigger("atLastPlayerPosition");
+    }
+
     public override object GetData()
     {
         return new Data()
         {
             Weapon = weapon,
             Dead = Dead,
-            hasLineOfSight = hasLineOfSight,
             lastPlayerPosition = lastPlayerPosition,
-            inPursueMode = inPursueMode,
+            hasLineOfSight = animator.GetBool("hasLineOfSight"),
+            currentState = animator.GetCurrentAnimatorStateInfo(0).fullPathHash,
         };
     }
 
@@ -89,9 +93,9 @@ public class Guard : Character
         Dead = d.Dead;
         foreach (var collider in GetComponentsInChildren<Collider2D>())
             collider.enabled = !Dead;
-        hasLineOfSight = d.hasLineOfSight;
         lastPlayerPosition = d.lastPlayerPosition;
-        inPursueMode = d.inPursueMode;
+        animator.SetBool("hasLineOfSight", d.hasLineOfSight);
+        animator.CrossFade(d.currentState, 0);
     }
 
     struct Data
@@ -101,6 +105,7 @@ public class Guard : Character
         public bool hasLineOfSight;
         public Vector2? lastPlayerPosition;
         public bool inPursueMode;
+        public int currentState;
     }
 }
 
@@ -109,32 +114,10 @@ public class Guard : Character
 public class GuardEditor : Editor
 {
     private Guard Guard { get { return (target as Guard); } }
-    int selectedIndex = 0;
-    Type[] components = InterfaceSearch.GetTypesWithThisInterface<ICharacterComponent>().ToArray();
-    string[] componentsString = new string[] { "Select component" }.Concat(InterfaceSearch.GetTypesWithThisInterface<ICharacterComponent>().Select(t => t.ToString())).ToArray();
 
     public override void OnInspectorGUI()
     {
         base.OnInspectorGUI();
-        GUILayout.BeginVertical();
-        GUILayout.Label("Add component", new GUIStyle() { fontStyle = FontStyle.Bold });
-        int selected = EditorGUILayout.Popup(selectedIndex, componentsString);
-        if (selectedIndex != selected)
-            Undo.AddComponent(Guard.gameObject, components.ElementAt(selected - 1));
-        GUILayout.Label("Actions", new GUIStyle() { fontStyle = FontStyle.Bold });
-        GUILayout.BeginHorizontal();
-        GUILayout.Label("Priority");
-        GUILayout.Label("Action");
-        GUILayout.EndHorizontal();
-        foreach (ICharacterComponent action in Guard.GetComponents<ICharacterComponent>().OrderByDescending(i => i.Priority))
-        {
-            GUILayout.BeginHorizontal();
-            GUILayout.Label(action.Priority.ToString(), new GUIStyle() { fontStyle = FontStyle.Bold });
-            GUILayout.Label((action as Component).GetType().ToString());
-            GUILayout.EndHorizontal();
-        }
-
-        GUILayout.EndVertical();
     }
 }
 #endif
