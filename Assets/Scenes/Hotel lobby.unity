@@ -3041,6 +3041,7 @@ MonoBehaviour:
   rigidBody: {fileID: 0}
   spriteRenderer: {fileID: 0}
   moveSpeed: 8
+  runSpeed: 8
   turnSpeed: 60
   pelletPrefab: {fileID: 114959879543176336, guid: a20b2286a1ae4f24397cc6196f1547b7,
     type: 2}
@@ -3183,7 +3184,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rigidBody: {fileID: 0}
   spriteRenderer: {fileID: 0}
-  moveSpeed: 8
+  moveSpeed: 2
+  runSpeed: 8
   turnSpeed: 60
   pelletPrefab: {fileID: 114959879543176336, guid: a20b2286a1ae4f24397cc6196f1547b7,
     type: 2}

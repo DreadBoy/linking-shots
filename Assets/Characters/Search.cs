@@ -2,17 +2,25 @@
 
 public class Search : GuardState
 {
-    public override void Run(Guard guard)
+    public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        if (!guard.HasLineOfSight && !guard.lastPlayerPosition.HasValue)
+        base.OnStateEnter(animator, stateInfo, layerIndex);
+        guard.rigidBody.bodyType = RigidbodyType2D.Dynamic;
+    }
+
+    public override void Run()
+    {
+        if (!guard.HasLineOfSight)
         {
-            guard.rigidBody.bodyType = RigidbodyType2D.Dynamic;
-            if (Random.Range(0, 19) != 0)
-                return;
-            guard.FaceTowardTarget(guard.Forward * 5 + guard.Right * Random.Range(-0.3f, 0.3f));
-            guard.WalkTowardTarget(guard.Forward * 5 + guard.Right * Random.Range(-0.3f, 0.3f));
+            Vector2 target = guard.transform.position2D() + guard.Forward * 5 + guard.Right * Random.Range(-1f, 1f);
+            guard.FaceTowardTarget(target);
+            guard.WalkTowardTarget(target);
         }
-        else if (guard.rigidBody.bodyType != RigidbodyType2D.Kinematic)
-            guard.rigidBody.bodyType = RigidbodyType2D.Kinematic;
+    }
+
+    public override void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+    {
+        base.OnStateExit(animator, stateInfo, layerIndex);
+        guard.rigidBody.bodyType = RigidbodyType2D.Kinematic;
     }
 }

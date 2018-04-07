@@ -1,6 +1,6 @@
 ﻿public class ShootOnSight : GuardState
 {
-    public override void Run(Guard guard)
+    public override void Run()
     {
         if (!guard.HasLineOfSight)
             return;

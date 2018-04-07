@@ -9,7 +9,7 @@ public class Character : MonoBehaviour, IAffectedByTime
     [HideInInspector]
     public SpriteRenderer spriteRenderer;
     
-    public float moveSpeed = 8, turnSpeed = 60;
+    public float moveSpeed = 2, runSpeed = 8, turnSpeed = 60;
     [SerializeField]
     Pellet pelletPrefab;
     [SerializeField]

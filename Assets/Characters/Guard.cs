@@ -21,6 +21,8 @@ public class Guard : Character
     protected override void Start()
     {
         base.Start();
+        foreach (var state in animator.GetBehaviours<GuardState>())
+            state.guard = this;
     }
 
     protected override void Update()
@@ -39,7 +41,7 @@ public class Guard : Character
 
         var behaviour = animator.GetCurrentBehaviour<GuardState>();
         if (behaviour != null)
-            behaviour.Run(this);
+            behaviour.Run();
     }
 
     bool CheckLineOfSight()
@@ -65,6 +67,11 @@ public class Guard : Character
     public void WalkTowardTarget(Vector2 target)
     {
         rigidBody.MovePosition(transform.position2D() + (target - transform.position2D()).normalized * Time.deltaTime * moveSpeed);
+    }
+
+    public void RunTowardTarget(Vector2 target)
+    {
+        rigidBody.MovePosition(transform.position2D() + (target - transform.position2D()).normalized * Time.deltaTime * runSpeed);
     }
 
     public void EndOfPursue()

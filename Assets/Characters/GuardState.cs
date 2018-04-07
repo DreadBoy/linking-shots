@@ -1,4 +1,6 @@
 ﻿public abstract class GuardState : AdvancedStateMachineBehaviour
 {
-    public abstract void Run(Guard guard);
+    public Guard guard;
+
+    public abstract void Run();
 }
