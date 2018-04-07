@@ -13,30 +13,15 @@ public class ShootOnSight : MonoBehaviour, ICharacterComponent
         guard = GetComponent<Guard>();
     }
 
-    bool CheckLineOfSight()
-    {
-        float angle = Vector2.Angle(guard.Forward, guard.player.transform.position2D() - transform.position2D());
-        if (angle > 45)
-            return false;
-        RaycastHit2D hit = Physics2D.Linecast(transform.position2D(), guard.player.transform.position2D(), LayerMask.GetMask(Layers.Walls));
-        if (hit)
-            Debug.DrawLine(transform.position, hit.point, Color.green);
-        else
-            Debug.DrawLine(transform.position, guard.player.transform.position2D(), Color.red);
-        return !hit;
-    }
-
     void Execute()
     {
-        guard.Facing = guard.player.transform.position2D() - transform.position2D();
-        float angle = Vector2.SignedAngle(transform.up, guard.Facing);
-        guard.rigidBody.MoveRotation(guard.rigidBody.rotation + angle * Time.deltaTime * guard.turnSpeed);
+        guard.FaceTowardTarget(guard.player.transform.position2D());
         guard.Shoot();
     }
 
     public bool Run()
     {
-        if (!CheckLineOfSight())
+        if (!guard.hasLineOfSight)
             return false;
         Execute();
         return true;

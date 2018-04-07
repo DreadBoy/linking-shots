@@ -3078,8 +3078,8 @@ Rigidbody2D:
   m_GravityScale: 0
   m_Material: {fileID: 0}
   m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 1
+  m_SleepingMode: 2
+  m_CollisionDetection: 0
   m_Constraints: 0
 --- !u!114 &1383980812
 MonoBehaviour:
@@ -3159,11 +3159,12 @@ GameObject:
   m_Component:
   - component: {fileID: 1510169535}
   - component: {fileID: 1510169534}
-  - component: {fileID: 1510169533}
   - component: {fileID: 1510169536}
   - component: {fileID: 1510169537}
+  - component: {fileID: 1510169533}
   - component: {fileID: 1510169538}
   - component: {fileID: 1510169539}
+  - component: {fileID: 1510169540}
   m_Layer: 11
   m_Name: hitman
   m_TagString: Untagged
@@ -3192,6 +3193,7 @@ MonoBehaviour:
     type: 2}
   weapon: {fileID: 11400000, guid: ccc8e6e04dd6018439c573bf3e37fa3c, type: 2}
   player: {fileID: 1383980809}
+  hasLineOfSight: 0
 --- !u!50 &1510169534
 Rigidbody2D:
   serializedVersion: 4
@@ -3210,7 +3212,7 @@ Rigidbody2D:
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 1
+  m_CollisionDetection: 0
   m_Constraints: 0
 --- !u!4 &1510169535
 Transform:
@@ -3280,6 +3282,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   guard: {fileID: 1510169533}
   priority: 3
+--- !u!114 &1510169540
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1510169532}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ab9dcab10f698945a71dc412ad87dc4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  guard: {fileID: 1510169533}
+  priority: 4
 --- !u!1 &1526980365
 GameObject:
   m_ObjectHideFlags: 0

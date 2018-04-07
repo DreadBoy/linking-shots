@@ -12,6 +12,9 @@ public class Guard : Character
     public Player player;
     public ICharacterComponent[] components;
 
+    public bool hasLineOfSight = false;
+    public Vector2? lastPlayerPosition = null;
+
     void Reset()
     {
         player = FindObjectOfType<Player>();
@@ -26,11 +29,75 @@ public class Guard : Character
     protected override void Update()
     {
         base.Update();
+        bool hasLineOfSight = CheckLineOfSight();
+        if (hasLineOfSight && !this.hasLineOfSight)
+            lastPlayerPosition = null;
+        else if (!hasLineOfSight && this.hasLineOfSight)
+            lastPlayerPosition = player.transform.position;
+        this.hasLineOfSight = hasLineOfSight;
+
         if (Dead)
             return;
         foreach (var comp in components)
             if (comp.Run())
                 break;
+    }
+
+    bool CheckLineOfSight()
+    {
+        float angle = Vector2.Angle(Forward, player.transform.position2D() - transform.position2D());
+        if (angle > 45)
+            return false;
+        RaycastHit2D hit = Physics2D.Linecast(transform.position2D(), player.transform.position2D(), LayerMask.GetMask(Layers.Walls));
+        if (hit)
+            Debug.DrawLine(transform.position, hit.point, Color.green);
+        else
+            Debug.DrawLine(transform.position, player.transform.position2D(), Color.red);
+        return !hit;
+    }
+
+    public void FaceTowardTarget(Vector2 target)
+    {
+        Facing = target - transform.position2D();
+        float angle = Vector2.SignedAngle(transform.up, Facing);
+        rigidBody.MoveRotation(rigidBody.rotation + angle * Time.deltaTime * turnSpeed);
+    }
+
+    public void WalkTowardTarget(Vector2 target)
+    {
+        rigidBody.MovePosition(transform.position2D() + (target - transform.position2D()).normalized * Time.deltaTime * moveSpeed);
+    }
+
+    public override object GetData()
+    {
+        return new Data()
+        {
+            Weapon = weapon,
+            Dead = Dead,
+            hasLineOfSight = hasLineOfSight,
+            lastPlayerPosition = lastPlayerPosition
+        };
+    }
+
+    public override void SetData(object data)
+    {
+        if (!(data is Data))
+            return;
+        Data d = (Data)data;
+        weapon = d.Weapon;
+        Dead = d.Dead;
+        foreach (var collider in GetComponentsInChildren<Collider2D>())
+            collider.enabled = !Dead;
+        hasLineOfSight = d.hasLineOfSight;
+        lastPlayerPosition = d.lastPlayerPosition;
+    }
+
+    struct Data
+    {
+        public Weapon Weapon;
+        public bool Dead;
+        public bool hasLineOfSight;
+        public Vector2? lastPlayerPosition;
     }
 }
 

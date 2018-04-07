@@ -4,7 +4,7 @@ using UnityEditor;
 #endif
 
 [RequireComponent(typeof(Guard))]
-public class FollowPath : MonoBehaviour, ICharacterComponent
+public class Patrol : MonoBehaviour, ICharacterComponent
 {
     public Guard guard;
     [SerializeField]
@@ -23,10 +23,10 @@ public class FollowPath : MonoBehaviour, ICharacterComponent
 }
 
 #if UNITY_EDITOR
-[CustomEditor(typeof(FollowPath))]
-public class FollowPathEditor : Editor
+[CustomEditor(typeof(Patrol))]
+public class PatrolEditor : Editor
 {
-    private FollowPath FollowPath { get { return (target as FollowPath); } }
+    private Patrol Patrol { get { return (target as Patrol); } }
 
 }
 #endif

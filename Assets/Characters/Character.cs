@@ -110,12 +110,14 @@ public class Character : MonoBehaviour, IAffectedByTime
     public virtual void GetKilled(Vector2 shotDirection)
     {
         Dead = true;
+        foreach (var collider in GetComponentsInChildren<Collider2D>())
+            collider.enabled = !Dead;
         GameObject blood = Instantiate(bloodPrefab);
         blood.transform.position = transform.position;
         blood.transform.up = shotDirection;
     }
 
-    public object GetData()
+    public virtual object GetData()
     {
         return new Data()
         {
@@ -124,12 +126,14 @@ public class Character : MonoBehaviour, IAffectedByTime
         };
     }
 
-    public void SetData(object data)
+    public virtual void SetData(object data)
     {
         if (!(data is Data))
             return;
         weapon = ((Data)data).Weapon;
         Dead = ((Data)data).Dead;
+        foreach (var collider in GetComponentsInChildren<Collider2D>())
+            collider.enabled = !Dead;
     }
 
     struct Data
