@@ -1,16 +1,14 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
 
-using UnityEngine;
 
 namespace UnityEngine.Tilemaps
 {
     [Serializable]
+    [CreateAssetMenu(fileName = "AnimatedTile", menuName = "Tiles/Animated Tile", order = 2)]
     public class AnimatedTile : TileBase
     {
         public Sprite[] m_AnimatedSprites;
@@ -41,18 +39,6 @@ namespace UnityEngine.Tilemaps
             }
             return false;
         }
-
-#if UNITY_EDITOR
-        [MenuItem("Assets/Create/Animated Tile")]
-        public static void CreateAnimatedTile()
-        {
-            string path = EditorUtility.SaveFilePanelInProject("Save Animated Tile", "New Animated Tile", "asset", "Save Animated Tile", "Assets");
-            if (path == "")
-                return;
-
-            AssetDatabase.CreateAsset(ScriptableObject.CreateInstance<AnimatedTile>(), path);
-        }
-#endif
     }
 
 #if UNITY_EDITOR
