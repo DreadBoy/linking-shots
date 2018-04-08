@@ -24,8 +24,8 @@ public class Search : GuardState
                 return;
             }
             Vector2 target = guard.transform.position2D() + guard.Forward * 5 + guard.Right * Random.Range(-1f, 1f);
-            guard.FaceTowardTarget(target);
-            guard.WalkTowardTarget(target);
+            guard.FaceTowardTarget(player.transform.position2D());
+            guard.WalkTowardTarget(player.transform.position2D());
         }
     }
 
