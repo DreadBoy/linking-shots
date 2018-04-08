@@ -7,11 +7,11 @@ MonoBehaviour:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
-  m_EditorHideFlags: 1
-  m_Script: {fileID: 13312, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: sofa-2
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 535f8e525ff367c4ba67961e201a05ed, type: 3}
+  m_Name: dirt-2
   m_EditorClassIdentifier: 
-  m_Sprite: {fileID: 21300932, guid: 7e0f85847836f7a4eb6f78069e4a6292, type: 3}
+  m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Transform:
     e00: 1
@@ -33,3 +33,7 @@ MonoBehaviour:
   m_InstancedGameObject: {fileID: 0}
   m_Flags: 1
   m_ColliderType: 1
+  m_DefaultSprite: {fileID: 21300028, guid: 7e0f85847836f7a4eb6f78069e4a6292, type: 3}
+  m_Sprites:
+  - {fileID: 21300028, guid: 7e0f85847836f7a4eb6f78069e4a6292, type: 3}
+  - {fileID: 21300030, guid: 7e0f85847836f7a4eb6f78069e4a6292, type: 3}
