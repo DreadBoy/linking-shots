@@ -86,8 +86,6 @@ public class Guard : Character
             Weapon = weapon,
             Dead = Dead,
             lastPlayerPosition = lastPlayerPosition,
-            hasLineOfSight = animator.GetBool("hasLineOfSight"),
-            currentState = animator.GetCurrentAnimatorStateInfo(0).fullPathHash,
         };
     }
 
@@ -101,18 +99,13 @@ public class Guard : Character
         foreach (var collider in GetComponentsInChildren<Collider2D>())
             collider.enabled = !Dead;
         lastPlayerPosition = d.lastPlayerPosition;
-        animator.SetBool("hasLineOfSight", d.hasLineOfSight);
-        animator.CrossFade(d.currentState, 0);
     }
 
     struct Data
     {
         public Weapon Weapon;
         public bool Dead;
-        public bool hasLineOfSight;
         public Vector2? lastPlayerPosition;
-        public bool inPursueMode;
-        public int currentState;
     }
 }
 

@@ -44,8 +44,7 @@ public class TimeMaster : MonoBehaviour
             return;
         Instant instant = new Instant(
             trackedObjects
-                .Select(obj => new ObjectInstant(obj.GetInstanceID(), obj.gameObject.activeSelf,
-                    obj.transform.position, obj.transform.rotation, obj.GetData()))
+                .Select(obj => obj.GetInstant())
                 .ToArray()
         );
         timeline.Add(instant);
@@ -107,11 +106,7 @@ public class TimeMaster : MonoBehaviour
         {
             var info = lastFrame.objects.FirstOrDefault(o => o.id == item.GetInstanceID());
             if (!info.Equals(default(ObjectInstant)))
-            {
-                item.transform.position = info.position;
-                item.transform.rotation = info.rotation;
-                item.SetData(info.data);
-            }
+                item.SetInstant(info);
         }
 
         timeline = timeline.Take(timeline.Count - 1).ToList();
@@ -127,13 +122,15 @@ public class TimeMaster : MonoBehaviour
         }
     }
 
-    struct ObjectInstant
+    public struct ObjectInstant
     {
         public int id;
         public bool enabled;
         public Vector3 position;
         public Quaternion rotation;
         public object data;
+        public int animatorState;
+        public AnimatorParameterInstant[] animatorParameters;
 
         public ObjectInstant(int id, bool enabled, Vector3 position, Quaternion rotation, object data)
         {
@@ -142,6 +139,45 @@ public class TimeMaster : MonoBehaviour
             this.position = position;
             this.rotation = rotation;
             this.data = data;
+            this.animatorState = 0;
+            this.animatorParameters = new AnimatorParameterInstant[0];
+        }
+
+        public ObjectInstant(int id, bool enabled, Vector3 position, Quaternion rotation, int animatorState, AnimatorParameterInstant[] animatorParameters, object data): this(id, enabled, position, rotation, data)
+        {
+            this.animatorState = animatorState;
+            this.animatorParameters = animatorParameters;
+        }
+    }
+
+    public struct AnimatorParameterInstant
+    {
+        public int nameHash;
+        public AnimatorControllerParameterType type;
+        public object value;
+
+        public AnimatorParameterInstant(Animator animator, AnimatorControllerParameter parameter)
+        {
+            type = parameter.type;
+            nameHash = parameter.nameHash;
+            switch (type)
+            {
+                case AnimatorControllerParameterType.Bool:
+                    value = animator.GetBool(parameter.nameHash);
+                    break;
+                case AnimatorControllerParameterType.Float:
+                    value = animator.GetFloat(parameter.nameHash);
+                    break;
+                case AnimatorControllerParameterType.Int:
+                    value = animator.GetInteger(parameter.nameHash);
+                    break;
+                case AnimatorControllerParameterType.Trigger:
+                    value = animator.GetBool(parameter.nameHash);
+                    break;
+                default:
+                    value = 0;
+                    break;
+            }
         }
     }
 }
