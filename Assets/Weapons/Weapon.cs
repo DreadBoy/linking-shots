@@ -8,7 +8,7 @@ public enum WeaponType
     Shotgun
 }
 
-[CreateAssetMenu(fileName = "Data", menuName = "Weapon", order = 1)]
+[CreateAssetMenu(fileName = "Data", menuName = "Data/Weapon", order = 2)]
 public class Weapon : ScriptableObject
 {
     public WeaponType Type;
