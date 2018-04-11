@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
-using UnityEditor.Events;
 #if UNITY_EDITOR
 using UnityEditor;
+using UnityEditor.Events;
 #endif
 
 [RequireComponent(typeof(TimeshiftEvents))]
@@ -45,15 +45,17 @@ public class TimeshiftColour : MonoBehaviour
         timeshiftEvents = GetComponent<TimeshiftEvents>();
         if (!timeshiftEvents)
             timeshiftEvents = gameObject.AddComponent<TimeshiftEvents>();
+#if UNITY_EDITOR
         UnityEventTools.AddPersistentListener(timeshiftEvents.TimeshiftStart, TimeshiftStart);
         UnityEventTools.AddPersistentListener(timeshiftEvents.TimeshiftStop, TimeshiftStop);
+#endif
     }
 }
 
 
 
 #if UNITY_EDITOR
-[CustomEditor(typeof(TimeshiftColour))]
+[CustomEditor(typeof(TimeshiftColour)), CanEditMultipleObjects]
 public class TimeshiftColourEditor : Editor
 {
     private TimeshiftColour TimeshiftColour { get { return (target as TimeshiftColour); } }

@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
-using UnityEditor.Events;
 #if UNITY_EDITOR
 using UnityEditor;
+using UnityEditor.Events;
 #endif
 
 [RequireComponent(typeof(TimeshiftEvents))]
@@ -20,8 +20,10 @@ public class TimeshiftMusic : MonoBehaviour
         source = GetComponent<AudioSource>();
         if (!source)
             source = gameObject.AddComponent<AudioSource>();
+#if UNITY_EDITOR
         UnityEventTools.AddPersistentListener(timeshiftEvents.TimeshiftStart, TimeshiftStart);
         UnityEventTools.AddPersistentListener(timeshiftEvents.TimeshiftStop, TimeshiftStop);
+#endif
         timeMaster = FindObjectOfType<TimeMaster>();
     }
 

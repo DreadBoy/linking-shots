@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
-using UnityEditor.Events;
 #if UNITY_EDITOR
 using UnityEditor;
+using UnityEditor.Events;
 #endif
 
 [RequireComponent(typeof(TimeshiftEvents))]
@@ -28,8 +28,10 @@ public class TimeshiftUI : MonoBehaviour
         if (!timeshiftEvents)
             timeshiftEvents = gameObject.AddComponent<TimeshiftEvents>();
         image = GetComponent<Image>();
+#if UNITY_EDITOR
         UnityEventTools.AddPersistentListener(timeshiftEvents.TimeshiftStart, TimeshiftStart);
         UnityEventTools.AddPersistentListener(timeshiftEvents.TimeshiftStop, TimeshiftStop);
+#endif
     }
 }
 
