@@ -32,4 +32,9 @@ static class Utils
                     break;
             }
     }
+
+    public static Vector2 ToVector2(this Vector3 vector)
+    {
+        return vector;
+    }
 }

@@ -3,11 +3,12 @@
 public class Door : MonoBehaviour
 {
     public Player player;
-    public Animator animator; 
+    public Animator animator;
+    public BoxCollider2D boxCollider;
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.E) && (player.transform.position2D() - transform.position2D()).magnitude < 0.5f)
+        if (Input.GetKeyDown(KeyCode.E) && (player.transform.position2D() - boxCollider.bounds.center.ToVector2()).magnitude < 1f)
             Toggle();
     }
 
@@ -20,5 +21,6 @@ public class Door : MonoBehaviour
     {
         player = FindObjectOfType<Player>();
         animator = GetComponentInChildren<Animator>();
+        boxCollider = GetComponentInChildren<BoxCollider2D>();
     }
 }
