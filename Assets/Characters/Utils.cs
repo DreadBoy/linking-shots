@@ -37,4 +37,10 @@ static class Utils
     {
         return vector;
     }
+
+    public static void SetActiveOnChildren(this GameObject gameObject, bool value)
+    {
+        foreach (Transform child in gameObject.transform)
+            child.gameObject.SetActive(value);
+    }
 }
