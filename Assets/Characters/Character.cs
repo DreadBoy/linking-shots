@@ -78,16 +78,19 @@ public class Character : MonoBehaviour, IAffectedByTime
         switch (weapon.Type)
         {
             case WeaponType.Gun:
-                if (Time.time - lastShot < 0.5)
+                if (Time.time - lastShot < 0.5 || weapon.Ammo == 0)
                     return;
                 break;
             case WeaponType.Hand:
-            case WeaponType.Shotgun:
                 if (Time.time - lastShot < 1)
                     return;
                 break;
+            case WeaponType.Shotgun:
+                if (Time.time - lastShot < 1 || weapon.Ammo < 3)
+                    return;
+                break;
             case WeaponType.Riffle:
-                if (Time.time - lastShot < 0.1f)
+                if (Time.time - lastShot < 0.1f || weapon.Ammo == 0)
                     return;
                 break;
         }
@@ -95,14 +98,17 @@ public class Character : MonoBehaviour, IAffectedByTime
         {
             case WeaponType.Gun:
                 CreateShot(new Vector2(0.15f, 0.46f), Vector2.zero);
+                weapon.Ammo--;
                 break;
             case WeaponType.Riffle:
                 CreateShot(new Vector2(0.15f, 0.54f), Vector2.zero);
+                weapon.Ammo--;
                 break;
             case WeaponType.Shotgun:
                 CreateShot(new Vector2(0.15f, 0.46f), Vector2.zero);
                 CreateShot(new Vector2(0.15f, 0.46f), transform.up + transform.right * 0.5f);
                 CreateShot(new Vector2(0.15f, 0.46f), transform.up - transform.right * 0.5f);
+                weapon.Ammo -= 3;
                 break;
         }
         lastShot = Time.time;

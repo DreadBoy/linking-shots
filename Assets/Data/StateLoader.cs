@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -11,10 +10,10 @@ public class StateLoader : MonoBehaviour
     private void Start()
     {
         DontDestroyOnLoad(this);
-        IEnumerable<StateLoader> otherLoaders = FindObjectsOfType<StateLoader>().Where(loader => loader != this);
-        if (otherLoaders.Count() > 0)
+        StateLoader otherLoader = FindObjectsOfType<StateLoader>().FirstOrDefault(loader => loader != this);
+        if (!otherLoader)
             Destroy(gameObject);
-        if (otherLoaders.Count() == 0 && gameState)
+        if (otherLoader && gameState)
             LoadState(gameState);
     }
 
