@@ -11,6 +11,9 @@ public class InteractionTrigger : MonoBehaviour
     public BoxCollider2D boxCollider;
     public KeyCode keyCode;
     public string action;
+    public string reverseAction;
+    [HideInInspector]
+    public string text;
 
     public Vector2 GetCenter()
     {

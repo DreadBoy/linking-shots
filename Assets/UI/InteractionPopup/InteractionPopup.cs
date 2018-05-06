@@ -19,7 +19,7 @@ public class InteractionPopup : MonoBehaviour
             gameObject.SetActiveOnChildren(false);
             return;
         }
-        text.text = " " + trigger.action + " (" + trigger.keyCode + ") ";
+        text.text = " " + trigger.text + " (" + trigger.keyCode + ") ";
         var position = Camera.main.WorldToViewportPoint(trigger.GetCenter());
         rectTransform.anchoredPosition = new Vector2(canvas.GetComponent<RectTransform>().sizeDelta.x * position.x + 10, canvas.GetComponent<RectTransform>().sizeDelta.y * position.y + 10);
         gameObject.SetActiveOnChildren(true);
